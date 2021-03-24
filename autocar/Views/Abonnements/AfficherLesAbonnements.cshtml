@@ -1,0 +1,131 @@
+﻿@model IEnumerable<autocar.Models.Abonnement>
+@{ if (Session["Nom"] != null)
+    {
+
+        <h1> Bonjour @Session["Nom"]</h1>
+    }
+
+}
+
+<br>
+<br>
+<br>
+<br>
+@{
+    ViewBag.Title = "Index";
+    if ((string)Session["success"] == "valide")
+    {
+    <div class="alert alert-success" role="alert">
+        <H1 class="alert-heading">Félicitations!</H1>
+        <p> Votre offre vient d'être ajoutée. </p>
+    </div>
+
+
+    }
+
+
+    else if ((string)Session["success"] == "error")
+    {
+        <div class="alert alert-danger" role="alert">
+        <H1>Attention!</H1>
+        <p>Cette offre éxiste déjà.</p>
+        </div>
+        
+    }
+    else { }
+}
+
+
+<p>
+    @if (Session["isadmin"] != null)
+    { <h1>Voici les réservations de vos clients :</h1>}
+    else { <center><h1>Voici les offres disponibles</h1></center> }
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Duree)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ville_depart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ville_arrivee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_depart)
+        </th>
+    
+        <th>
+            @Html.DisplayNameFor(model => model.DateDeModification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateDeMise)
+        </th>
+        <th>
+            Propriétaire
+        <th>
+            Status
+        </th>
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ville_depart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ville_arrivee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_depart)
+            </td>
+          
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDeModification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDeMise)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Utilisateur.Prenom)
+            </td>
+            <td>
+                @{
+                    if (item.isvalide == "Validé")
+                    {
+                        @Html.DisplayText("Validé");
+                        @Html.DisplayFor(modelItem => item.isvalide)
+                    }
+                    else
+                    {
+                        @Html.DisplayText("En attente");
+                        @Html.DisplayFor(modelItem => item.isvalide)
+                    }
+
+                }
+            </td>
+
+            @{ if (Session["isadmin"] != null)
+                {
+                    <td>
+                        @Html.ActionLink("Modifier", "Modifier", "Abonnements", new { id = item.Id }, null) |
+                        @Html.ActionLink("Supprimer", "Supprimer", "Abonnements", new { id = item.Id }, null) |
+                        @Html.ActionLink("Valider", "Valider", "Abonnements", new { id = item.Id }, null)
+
+                    </td>
+                }
+            }
+        </tr>
+    }
+
+</table>

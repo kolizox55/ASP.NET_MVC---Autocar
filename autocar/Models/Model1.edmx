@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NavetteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Abonnement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Duree" Type="int" />
+          <Property Name="Ville_depart" Type="varchar" MaxLength="50" />
+          <Property Name="Ville_arrivee" Type="varchar" MaxLength="50" />
+          <Property Name="Date_depart" Type="varchar" MaxLength="50" />
+          <Property Name="Date_arrivee" Type="varchar" MaxLength="50" />
+          <Property Name="id_utilisateur" Type="int" />
+          <Property Name="DateDeMise" Type="datetime" />
+          <Property Name="id_bus" Type="int" />
+          <Property Name="DateDeModification" Type="datetime" />
+          <Property Name="isvalide" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Bus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Matricule" Type="varchar" MaxLength="50" />
+          <Property Name="Marque" Type="nchar" MaxLength="10" />
+          <Property Name="clim" Type="int" />
+          <Property Name="nb_siege" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SocieteT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nchar" MaxLength="10" />
+          <Property Name="Prenom" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Sexe" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CIN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isadmin" Type="int" />
+          <Property Name="datenaissance" Type="date" />
+        </EntityType>
+        <Association Name="FK_Abonnement_ToBus_">
+          <End Role="Bus" Type="Self.Bus" Multiplicity="0..1" />
+          <End Role="Abonnement" Type="Self.Abonnement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Abonnement">
+              <PropertyRef Name="id_bus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Abonnement_ToUtilisateur_">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Abonnement" Type="Self.Abonnement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Abonnement">
+              <PropertyRef Name="id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NavetteModelStoreContainer">
+          <EntitySet Name="Abonnement" EntityType="Self.Abonnement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bus" EntityType="Self.Bus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SocieteT" EntityType="Self.SocieteT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Abonnement_ToBus_" Association="Self.FK_Abonnement_ToBus_">
+            <End Role="Bus" EntitySet="Bus" />
+            <End Role="Abonnement" EntitySet="Abonnement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Abonnement_ToUtilisateur_" Association="Self.FK_Abonnement_ToUtilisateur_">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Abonnement" EntitySet="Abonnement" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NavetteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Abonnement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Duree" Type="Int32" />
+          <Property Name="Ville_depart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ville_arrivee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date_depart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date_arrivee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_utilisateur" Type="Int32" />
+          <Property Name="DateDeMise" Type="DateTime" Precision="3" />
+          <Property Name="id_bus" Type="Int32" />
+          <Property Name="DateDeModification" Type="DateTime" Precision="3" />
+          <Property Name="isvalide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bus" Relationship="Self.FK_Abonnement_ToBus_" FromRole="Abonnement" ToRole="Bus" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Abonnement_ToUtilisateur_" FromRole="Abonnement" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Bus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Matricule" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Marque" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="clim" Type="Int32" />
+          <Property Name="nb_siege" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Abonnements" Relationship="Self.FK_Abonnement_ToBus_" FromRole="Bus" ToRole="Abonnement" />
+        </EntityType>
+        <EntityType Name="SocieteT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Prenom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Sexe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isadmin" Type="Int32" />
+          <NavigationProperty Name="Abonnements" Relationship="Self.FK_Abonnement_ToUtilisateur_" FromRole="Utilisateur" ToRole="Abonnement" />
+          <Property Name="datenaissance" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_Abonnement_ToBus_">
+          <End Role="Bus" Type="Self.Bus" Multiplicity="0..1" />
+          <End Role="Abonnement" Type="Self.Abonnement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Abonnement">
+              <PropertyRef Name="id_bus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Abonnement_ToUtilisateur_">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Abonnement" Type="Self.Abonnement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Abonnement">
+              <PropertyRef Name="id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NavetteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Abonnements" EntityType="Self.Abonnement" />
+          <EntitySet Name="Buses" EntityType="Self.Bus" />
+          <EntitySet Name="SocieteTs" EntityType="Self.SocieteT" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <AssociationSet Name="FK_Abonnement_ToBus_" Association="Self.FK_Abonnement_ToBus_">
+            <End Role="Bus" EntitySet="Buses" />
+            <End Role="Abonnement" EntitySet="Abonnements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Abonnement_ToUtilisateur_" Association="Self.FK_Abonnement_ToUtilisateur_">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Abonnement" EntitySet="Abonnements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NavetteModelStoreContainer" CdmEntityContainer="NavetteEntities">
+          <EntitySetMapping Name="Abonnements">
+            <EntityTypeMapping TypeName="NavetteModel.Abonnement">
+              <MappingFragment StoreEntitySet="Abonnement">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Duree" ColumnName="Duree" />
+                <ScalarProperty Name="Ville_depart" ColumnName="Ville_depart" />
+                <ScalarProperty Name="Ville_arrivee" ColumnName="Ville_arrivee" />
+                <ScalarProperty Name="Date_depart" ColumnName="Date_depart" />
+                <ScalarProperty Name="Date_arrivee" ColumnName="Date_arrivee" />
+                <ScalarProperty Name="id_utilisateur" ColumnName="id_utilisateur" />
+                <ScalarProperty Name="DateDeMise" ColumnName="DateDeMise" />
+                <ScalarProperty Name="id_bus" ColumnName="id_bus" />
+                <ScalarProperty Name="DateDeModification" ColumnName="DateDeModification" />
+                <ScalarProperty Name="isvalide" ColumnName="isvalide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buses">
+            <EntityTypeMapping TypeName="NavetteModel.Bus">
+              <MappingFragment StoreEntitySet="Bus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Matricule" ColumnName="Matricule" />
+                <ScalarProperty Name="Marque" ColumnName="Marque" />
+                <ScalarProperty Name="clim" ColumnName="clim" />
+                <ScalarProperty Name="nb_siege" ColumnName="nb_siege" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SocieteTs">
+            <EntityTypeMapping TypeName="NavetteModel.SocieteT">
+              <MappingFragment StoreEntitySet="SocieteT">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="NavetteModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateur">
+                <ScalarProperty Name="datenaissance" ColumnName="datenaissance" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+                <ScalarProperty Name="CIN" ColumnName="CIN" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="isadmin" ColumnName="isadmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
